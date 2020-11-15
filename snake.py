@@ -1,15 +1,14 @@
-from os import system
+from os import system, name
+from time import sleep 
 from random import randint
 
-class The_Map():
+class Field():
     def __init__(self,w,l):
         self.map = []
         self.width = w
         self.length = l
-    def new(self):
-        self.map = [['x']*self.l]*self.w
-        print(self.map)
-    def get_map(self):
+    def get(self):
+        self.map = ["#"+['x']*self.length+"#"]*self.width
         return self.map
 
 class Snake():
@@ -27,8 +26,18 @@ class Apple():
 
 class Game():
     def __init__(self):
-        self.the_map = The_Map(5,5)
+        self.field = Field(5,5)
     def play_game(self):
+        print("Game started!")
 
-lol = Game()
-lol.play_game()
+def clear():
+    if name == "nt":
+        system('cls')
+    else:
+        system('clear')
+
+test = Game()
+test.play_game()
+
+# sleep(2)
+# clear()
