@@ -1,7 +1,7 @@
 from os import system, name
 from time import sleep 
 from random import randint
-import curses
+import msvcrt
 
 def clear():
     # Clear command line
@@ -9,6 +9,15 @@ def clear():
         system('cls')
     else:
         system('clear')
+
+class Keyboard():
+    def getchar(self):
+        # Returns a keyboard character after kbhit() has been called.
+        return msvcrt.getch().decode('utf-8')
+
+    def kbhit(self):
+        # Returns True if keyboard character was hit, False otherwise.
+        return msvcrt.kbhit()
 
 class Field():
     def __init__(self,w,l):
@@ -47,25 +56,40 @@ class Game():
 
     def play_game(self):
         print("Game started!")
-        response = input("Press any key to start or \"x\" for exit: ")
-        if response == "x":
-            exit()
+        # response = input("Press any key to start or \"x\" for exit: ")
+        # if response == "x":
+        #     exit()
+        # Todolist: 
+        # snake moving and control
+        # board detecting 
+        key = Keyboard()
+        head = Entity(0,0,"O")
+        apple = Entity(randint(0,3),randint(0,24), "@")
+
         while True:
-            # Todolist: 
-            # snake moving and control
-            # board detecting 
+            clear()
 
-            head = Entity(1,0,"O")
-            apple = Entity(randint(0,3),randint(0,24), "@")
-            while True:
-                clear()
+            self.field.background()
+            self.field.add_entity(head.x,head.y,head.symbol)
+            self.field.add_entity(apple.x,apple.y,apple.symbol)
+            self.field.draw()
 
-                self.field.background()
-                self.field.add_entity(head.x,head.y,head.symbol)
-                self.field.add_entity(apple.x,apple.y,apple.symbol)
-                self.field.draw()
-                
-                sleep(0.1)
+            if key.kbhit():
+                if key.getchar() == 'w':
+                    head.x+=-1
+                    head.y+=0     
+                elif key.getchar() == 's':
+                    head.x+=1
+                    head.y+=0
+                elif key.getchar() == 'd':
+                    head.x+=0
+                    head.y+=1
+                elif key.getchar() == "a":
+                    head.x+=0
+                    head.y+=-1         
+                else:
+                    pass           
+
             
 
 test = Game()
