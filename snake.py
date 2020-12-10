@@ -73,7 +73,7 @@ class Game():
             self.field.add_entity(head.x,head.y,head.symbol)
             self.field.add_entity(apple.x,apple.y,apple.symbol)
             self.field.draw()
-
+            # need switch case
             if key.kbhit():
                 if key.getchar() == 'w':
                     head.x+=-1
